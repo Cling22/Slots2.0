@@ -1,4 +1,4 @@
-// --- Slot Machine Logic (identical to your original file, except for modularization) ---
+// --- Slot Machine Logic with working reel spin animation ---
 const symbols = ["💎", "🪙", "💰", "🤑", "💳", "💵"];
 const JACKPOT_MULTIPLIER = 100;
 const DOUBLE_MULTIPLIER = 2.5;
@@ -23,6 +23,7 @@ function setPlayerName(name) {
 if (document.getElementById("spinButton")) {
   let credits = parseInt(localStorage.getItem(STORAGE_KEY)) || INITIAL_CREDITS;
   const reels = ["reel0", "reel1", "reel2"].map(id => document.querySelector(`#${id} .symbols`));
+  const reelHeight = 80; // Height per symbol
 
   function updateCredits(val) {
     credits += val;
@@ -69,7 +70,7 @@ if (document.getElementById("spinButton")) {
     } catch (e) {}
   }
 
-  function spinSlots() {
+  async function spinSlots() {
     let bet = parseInt(document.getElementById("bet").value);
     if (bet <= 0 || bet > credits) {
       document.getElementById("message").textContent = "Invalid bet.";
@@ -78,12 +79,49 @@ if (document.getElementById("spinButton")) {
     credits -= bet;
     updateCredits(0);
     playSpinSound();
-    let res = [];
-    for (let i = 0; i < 3; i++) {
-      res[i] = symbols[Math.floor(Math.random() * symbols.length)];
-      let reel = document.getElementById("reel" + i).querySelector(".symbols");
-      reel.innerHTML = `<div class='symbol'>${res[i]}</div>`;
+
+    const spins = 4; // Number of full symbol cycles the reels spin
+    const finalIndexes = [];
+
+    for (let i = 0; i < reels.length; i++) {
+      const reel = reels[i];
+      // Build spinning symbols sequence
+      let spinSymbols = [];
+      for (let j = 0; j < spins * symbols.length + symbols.length; j++) {
+        spinSymbols.push(symbols[j % symbols.length]);
+      }
+      reel.innerHTML = spinSymbols.map(s => `<div class="symbol">${s}</div>`).join('');
+      reel.style.transition = 'none';
+      reel.style.transform = 'translateY(0)';
+
+      // Final random symbol index
+      const finalIndex = Math.floor(Math.random() * symbols.length);
+      finalIndexes.push(finalIndex);
+
+      // Calculate translateY amount to reach final symbol
+      const symbolCount = spinSymbols.length;
+      const finalPosition = -((symbolCount - symbols.length + finalIndex) * reelHeight);
+
+      // Trigger layout and then animate
+      await new Promise(r => setTimeout(r, 50)); 
+      reel.style.transition = 'transform 3s cubic-bezier(0.25, 1, 0.5, 1)';
+      reel.style.transform = `translateY(${finalPosition}px)`;
     }
+
+    // Wait for animation to finish
+    await new Promise(r => setTimeout(r, 3100));
+
+    // Update reels with final symbols only
+    for (let i = 0; i < reels.length; i++) {
+      const reel = reels[i];
+      const symbol = symbols[finalIndexes[i]];
+      reel.style.transition = 'none';
+      reel.style.transform = 'translateY(0)';
+      reel.innerHTML = `<div class="symbol">${symbol}</div>`;
+    }
+
+    // Payout logic with final symbols
+    const res = finalIndexes.map(i => symbols[i]);
     let payout = 0;
     if (res[0] === res[1] && res[1] === res[2]) {
       payout = bet * JACKPOT_MULTIPLIER;
@@ -96,6 +134,7 @@ if (document.getElementById("spinButton")) {
     } else {
       document.getElementById("message").textContent = "Try again!";
     }
+
     updateCredits(payout);
     toggleSpinButton();
   }
@@ -109,12 +148,15 @@ if (document.getElementById("spinButton")) {
   }
 
   document.getElementById("spinButton").onclick = spinSlots;
-  document.getElementById("resetButton").onclick = resetGame;
+  // Hide reset button because it causes overlaps and is unnecessary
+  const resetBtn = document.getElementById("resetButton");
+  if (resetBtn) resetBtn.style.display = 'none';
+
   document.getElementById("bet").oninput = toggleSpinButton;
   updateCredits(0);
   toggleSpinButton();
 
-  // --- Leaderboard integration ---
+  // Leaderboard update on slots page
   function updateLeaderboard() {
     let lb = getLeaderboard();
     let name = getPlayerName();
