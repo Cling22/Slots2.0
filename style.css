@@ -1,74 +1,92 @@
-body {
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   background-color: #121217;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
-  min-height: 100vh;
-  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 50px;
+  justify-content: start;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  padding: 40px 20px 60px 20px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 nav {
+  width: 100%;
   display: flex;
-  gap: 30px;
-  margin-bottom: 40px;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
 }
 
 nav a {
-  padding: 8px 30px;
-  font-weight: 700;
-  font-size: 1.3rem;
+  padding: 10px 40px;
+  font-weight: 900;
+  font-size: 1.4rem;
+  border-radius: 30px;
   text-decoration: none;
-  border-radius: 25px;
   color: #facc15;
-  background-color: transparent;
-  border: 2.5px solid #facc15;
-  transition: all 0.25s ease;
+  border: 3px solid #facc15;
+  transition: all 0.3s ease;
+  user-select: none;
 }
 
 nav a:hover, nav a.active {
-  color: #222;
   background-color: #facc15;
+  color: #121217;
   border-color: #facc15;
 }
 
 h1 {
   font-weight: 900;
-  font-size: 2.8rem;
+  font-size: 3.4rem;
+  margin-bottom: 30px;
+  text-align: center;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 15px;
-  margin-bottom: 15px;
 }
 
 #credits {
-  font-size: 1.15rem;
-  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 label {
-  font-size: 1.1rem;
-  margin-bottom: 6px;
+  font-size: 1.2rem;
+  font-weight: 600;
   display: block;
   text-align: center;
+  margin-bottom: 8px;
 }
 
 input#bet {
-  width: 160px;
+  width: 100%;
+  max-width: 220px;
   padding: 15px;
-  margin-bottom: 25px;
-  border-radius: 15px;
+  border-radius: 30px;
   border: none;
-  font-size: 1.4rem;
-  text-align: center;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: #222;
+  text-align: center;
+  color: #121217;
   background-color: #facc15;
   outline: none;
   transition: background-color 0.3s;
+  margin: 0 auto 40px auto;
+  display: block;
 }
 
 input#bet:focus {
@@ -77,63 +95,69 @@ input#bet:focus {
 
 .slot-machine {
   display: flex;
-  gap: 25px;
+  gap: 30px;
   justify-content: center;
-  margin-bottom: 25px;
-  width: 290px;
+  margin-bottom: 40px;
 }
 
 .reel {
   background-color: #222228;
-  border-radius: 20px;
-  border: 2px solid #555561;
-  width: 80px;
-  height: 190px;
+  border-radius: 25px;
+  border: 3px solid #555561;
+  width: 90px;
+  height: 210px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  box-shadow: 0 0 12px #444455 inset;
+  box-shadow: 0 0 18px #444455 inset;
   overflow: hidden;
+  position: relative;
 }
 
 .symbols {
-  font-size: 3.8rem;
   user-select: none;
+  font-size: 4.5rem;
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: absolute;
+  width: 100%;
   top: 0;
-  transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
 }
 
 .symbol {
-  display: inline-block;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
-  height: 80px;
-  width: 100%;
-  text-align: center;
 }
 
 button {
-  display: block;
-  margin: 12px auto 0 auto;
-  user-select: none;
-  border-radius: 25px;
-  border: none;
-  padding: 15px 45px;
+  display: inline-block;
+  width: 48%;
+  padding: 16px 0;
   font-weight: 900;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
+  border-radius: 30px;
+  border: none;
   background-color: #facc15;
-  color: #222;
+  color: #121217;
   cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 5px 14px #c5a015;
+  text-align: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 18px #c5a015;
+  user-select: none;
+}
+
+button:first-of-type {
+  margin-right: 4%;
 }
 
 button:hover:not(:disabled) {
   background-color: #e4a900;
-  box-shadow: 0 7px 18px #c99f0f;
+  box-shadow: 0 8px 22px #c99f0f;
 }
 
 button:disabled {
@@ -142,59 +166,149 @@ button:disabled {
   box-shadow: none;
 }
 
-.message {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  min-height: 1.5rem;
-  color: #facc15;
-  font-weight: 700;
-  text-align: center;
-}
-
-/* Hide the reset button on slots page to prevent overlap */
+/* Hide the reset button on slots page entirely */
 #resetButton {
   display: none !important;
+}
+
+.message {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #facc15;
+  margin-top: 30px;
+  min-height: 1.8rem;
+  text-align: center;
+  user-select: none;
 }
 
 table {
   margin-top: 25px;
   background: #222;
-  border-radius: 12px;
-  padding: 10px;
+  border-radius: 15px;
+  padding: 12px;
   width: 100%;
-  max-width: 400px;
-  border-collapse: collapse;
+  max-width: 480px;
+  border-collapse: separate;
+  border-spacing: 0 6px;
   color: white;
 }
 
 th, td {
-  padding: 10px 18px;
-  font-size: 1.1rem;
-  border-bottom: 1px solid #444;
+  padding: 16px 24px;
+  font-size: 1.2rem;
   text-align: center;
+  background: #333;
+  border-radius: 12px;
 }
 
-@media (max-width: 480px) {
-  .slot-machine {
-    gap: 15px;
-    width: 100%;
-    max-width: 280px;
+th {
+  font-weight: 900;
+  background: #444;
+}
+
+/* Center leaderboard name input and buttons */
+#playerName {
+  max-width: 300px;
+  width: 100%;
+  margin: 0 auto 15px auto;
+  padding: 14px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 25px;
+  border: none;
+  text-align: center;
+  color: #121217;
+  background-color: #facc15;
+  outline: none;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+#playerName:focus {
+  background-color: #e4a900;
+}
+
+/* Reset and save buttons on leaderboard: placed side by side */
+#saveName, #resetBoard {
+  width: 48%;
+  padding: 14px 0;
+  font-weight: 900;
+  font-size: 1.3rem;
+  border-radius: 30px;
+  border: none;
+  background-color: #facc15;
+  color: #121217;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 16px #c5a015;
+  user-select: none;
+  display: inline-block;
+}
+
+#saveName:hover, #resetBoard:hover {
+  background-color: #e4a900;
+  box-shadow: 0 7px 20px #c99f0f;
+}
+
+#resetBoard {
+  margin-left: 4%;
+}
+
+/* Make leaderboard container horizontally centered */
+#board {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Smaller screens responsiveness */
+@media (max-width: 560px) {
+  body {
+    padding: 30px 12px 50px 12px;
+    max-width: 100%;
   }
-  .reel {
-    width: 70px;
-    height: 160px;
+
+  nav {
+    gap: 25px;
+    margin-bottom: 35px;
   }
-  .symbols {
-    font-size: 3rem;
-  }
-  input#bet {
-    width: 120px;
-    padding: 12px;
-    font-size: 1.2rem;
-    margin-bottom: 18px;
-  }
-  button {
-    padding: 12px 30px;
+
+  nav a {
+    padding: 10px 24px;
     font-size: 1.1rem;
+  }
+
+  h1 {
+    font-size: 2.6rem;
+    margin-bottom: 25px;
+  }
+
+  input#bet {
+    max-width: 180px;
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+  }
+
+  .slot-machine {
+    gap: 22px;
+    margin-bottom: 35px;
+  }
+
+  .reel {
+    width: 75px;
+    height: 180px;
+  }
+
+  .symbols {
+    font-size: 3.8rem;
+  }
+
+  button, #saveName, #resetBoard {
+    width: 100%;
+    margin: 10px 0 0 0 !important;
+  }
+
+  #resetBoard {
+    margin-left: 0 !important;
   }
 }
