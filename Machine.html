@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Slots</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav>
+    <a href="Machine.html">Slots</a>
+    <a href="Leaderboard.html">Leaderboard</a>
+    <a href="Shop.html">Shop</a>
+  </nav>
+  <h1>🎰 Slots</h1>
+  <p id="credits">Money: $0</p>
+  <label for="bet">Bet Amount: </label>
+  <input type="number" id="bet" min="1" value="10" />
+  <div class="slot-machine">
+    <div class="reel" id="reel0"><div class="symbols"></div></div>
+    <div class="reel" id="reel1"><div class="symbols"></div></div>
+    <div class="reel" id="reel2"><div class="symbols"></div></div>
+  </div>
+  <button id="spinButton">SPIN 🎲</button>
+  <button id="resetButton">RESET GAME</button>
+  <p class="message" id="message"></p>
+  <audio id="loseSound" src="lose.mp3" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
